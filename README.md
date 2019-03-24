@@ -5,7 +5,6 @@
     A music app that displays the top tracks for the day, week, month, year, and lifetime!
 </p>
 
-
 ------
 
 ## Project setup
