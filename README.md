@@ -1,4 +1,12 @@
-# music
+<p align="center">
+    <h1 align="center">Vue Music App</h1>
+ </p>
+ <p align="center">
+    A music app that displays the top tracks for the day, week, month, year, and lifetime!
+</p>
+
+
+------
 
 ## Project setup
 ```
@@ -15,15 +23,16 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
+## Dependencies
+### Front-End
+* Vue
+* Axios
+  
+## Languages Used
+### Front-End
+* HTML
+* SCSS / CSS
+* Javascript
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Future Development
+I plan on adding a system that will also allow the user to enter in an artists name or album that will then give the user the preview of the songs.
