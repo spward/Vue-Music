@@ -1,7 +1,6 @@
 <template>
-<div id="tracks">
-  <h5 class="header">Top tracks</h5>
-
+<div id="albums">
+  <h5 class="header">Top Albums</h5>
   <select name="range" v-model="range">
     <option value="day">Day</option>
     <option value="week">Week</option>
@@ -10,72 +9,58 @@
     <option value="life">Life</option>
   </select>
   <br>
-  <div id="top-tracks">
-  <div id="track"  v-for="(track) in tracks" :key='track.id'>
-    <img @click="currentTrack(track), autoplay()" class="cover" :src="'https://api.napster.com/imageserver/v2/albums/' + track.albumId  + '/images/500x500.jpg'">
-
-    <div class=content-name><p>{{track.name}}</p></div>
-    <div class="artist-name"><p>{{track.artistName}}</p></div>
+  <div id="top-albums">
+  <div id="album"  v-for="album in albums" :key='album.id'>
+    <img class="cover" :src="'https://api.napster.com/imageserver/v2/albums/' + album.id  + '/images/500x500.jpg'">
+    <div class=content-name><p>{{album.name}}</p></div>
+    <div class="artist-name"><p>{{album.artistName}}</p></div>
   </div>
   </div>
-
 </div>
 </template>
 
 <script>
 import axios from 'axios';
-
 export default {
-  name: 'Tracks',
-  components: {
-  },
+  name: 'albums',
   data () {
     return {
-      tracks: [],
+      albums: [],
       range: 'day'
     }
   },
   created() {
-    this.trackData();
+    this.albumData();
   },
   watch: {
     range : function () {
-      this.trackData();
+      this.albumData();
     }
   },
   methods: {
-    trackData: function () {
-      axios.get('http://api.napster.com/v2.2/tracks/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=10&range=' + this.range)
+    albumData: function () {
+      axios.get('http://api.napster.com/v2.2/albums/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=10&range=' + this.range)
       .then(response => {
         // JSON responses are automatically parsed.
-        this.tracks = response.data.tracks
+        this.albums = response.data.albums
       })
       .catch(e => {
         this.errors.push(e)
       })
-    },
-    currentTrack: function (track) {
-      this.$root.$data.track.name = track.name;
-      this.$root.$data.track.artist = track.artistName;
-      this.$root.$data.track.album = track.albumId;
-      this.$root.$data.track.song = track.previewURL;
-    },
-    autoplay: function () {
-      this.$root.$data.track.isPlaying = true;
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-#top-tracks {
+<style scoped>
+#top-albums {
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
 }
 
-#track {
+#album {
 margin: 30px;
 }
 
@@ -83,10 +68,6 @@ margin: 30px;
   border-radius: 5%;
   width: 200px;
   height: 200px;
-  
-  &:hover {
-    cursor: pointer;
-  } 
 }
 
 h5 {
@@ -101,6 +82,16 @@ select {
 
 }
 
+audio {
+  position: absolute;
+  display: none;
+  z-index: 100;
+  margin-top: -58px;
+}
+
+#album:hover > audio{
+  display: block;
+} 
 
 p {
   max-width: 200px;

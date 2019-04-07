@@ -1,54 +1,82 @@
 <template>
   <div id="app">
-      <h1 class="header">Top tracks of the {{range}}</h1>
       <div id="center">
-      <select name="range" v-model="range">
-        <option value="day">Day</option>
-        <option value="week">Week</option>
-        <option value="month">Month</option>
-        <option value="year">Year</option>
-        <option value="life">Life</option>
-      </select>
+        <h1>Vue Music</h1>
+        <div class="input-wrapper">
+          <input type="text" name="search" id="search" placeholder="Search...">
+            <i class="fas fa-search"></i>
+        </div>
       </div>
-      <tracks :range="range"></tracks>
+      <playlists/>
+      <tracks/>
+      <albums/>
+      <artists/>
+  <audio-player/>
+
   </div>
 </template>
 
 <script>
-import Tracks from './components/Tracks.vue'
+import Tracks from './components/Tracks.vue';
+import Albums from './components/Albums';
+import Artists from './components/Artists';
+import Playlists from './components/Playlists';
+import AudioPlayer from '@/components/AudioPlayer/AudioPlayer';
+
 
 export default {
   name: 'app',
   components: {
-    'tracks' : Tracks
+    Tracks,
+    Albums,
+    Artists,
+    Playlists,
+    AudioPlayer
   },
   data () {
     return {
-      range: 'day'
+
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import 'assets/styles/_variables.scss';
 @import url('https://fonts.googleapis.com/css?family=Arimo:400,700');
 
 body {
   font-family: 'Arimo', sans-serif;
-  background-color: #1f2833;
-  color: #c5c6c7;
-}
-h1 {
-  font-size: 50px;
-  text-align: center;
-  color: #fca266;
-}
-
-select {
-  font-size: 20px;
+  background-color: $primary;
+  color: $text;
+  padding: 0;
+  margin: 0;
 }
 
 #center {
   text-align: center;
 }
+
+h1 {
+  font-size: 40px;
+   margin: 0;
+}
+input {
+  border: none;
+  border-radius: 15px;
+  padding: 5px;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.input-wrapper {
+  i {
+    padding-right: 10px;
+    color: #459ce7;
+    position: absolute;
+    margin-left: -25px;
+    margin-top: 25px;
+  }
+}
+
 </style>
