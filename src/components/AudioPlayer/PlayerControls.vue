@@ -1,51 +1,56 @@
 <template>
     <div id="player-controls">
         <i class="fas fa-step-backward control-btn"  id="prev-btn"></i>
-        <i class="fas fa-pause control-btn" v-if="this.$root.$data.track.isPlaying"  id="pause-btn" @click="pause(), togglePlay()"></i>
-        <i class="fas fa-play control-btn" v-else id="play-btn" @click="play(), togglePlay()"></i>
+        <i class="fas fa-pause control-btn" v-if="this.$root.$data.track.isPlaying"  id="pause-btn" @click="toggleStatus()"></i>
+        <i class="fas fa-play control-btn" v-else id="play-btn" @click="toggleStatus()"></i>
         <i class="fas fa-step-forward control-btn" id="next-btn"></i>
     </div>
 </template>
 
 <script>
-    export default {
+  export default {
       name: 'player-controls',
       data () {
         return {
-        audioElement: null
+          audioElement: null,
+          volume: 0.5,
         }
       },
-      created() {
-        this.loadTrack();
-      },
-      methods: {
-        loadTrack () {
-        this.audioElement = new Audio(this.$root.$data.track.song);
-        },
-        pause() {
-          this.audioElement.pause();
-        },
+    methods: {
+      toggleStatus: function () {
+        this.$root.$data.track.isPlaying = !this.$root.$data.track.isPlaying;
+        if (!this.isTrackLoaded) {
+          this.loadTrack(this.$root.$data.track.song || 0);
+          }
 
-        play() {
-          this.audioElement.play();
-        },
-        togglePlay() {
-          this.$root.$data.track.isPlaying = !this.$root.$data.track.isPlaying;
+          if(this.$root.$data.track.changeSong) {
+            this.loadTrack();
+          }
 
-          if ( !this.isPlaying ) {
+          if (this.$root.$data.track.isPlaying) {
             this.play();
             return;
-          }else {
-            this.pause();
           }
-        }
+          this.pause();
+        },
+      loadTrack: function () {
+        if (this.audioElement) this.audioElement.pause();
+        this.audioElement = new Audio(this.$root.$data.track.song);
+        this.$root.$data.track.changeSong = false;
       },
-      computed: {
-        isTrackLoaded: function () {
-          return (this.activeTrack !== null) && this.audioElement;
-        }
+      play: function () {
+        this.audioElement.play();
+      },
+      pause: function () {
+        this.audioElement.pause();
+      }
+    },
+    computed: {
+      isTrackLoaded: function () {
+        return (this.$root.$data.track.song !== null) && this.audioElement !== null;
       }
     }
+  }
 </script>
 
 <style lang="scss" scoped>

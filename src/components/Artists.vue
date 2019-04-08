@@ -59,6 +59,7 @@ export default {
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
+    margin-bottom: 75px;
 }
 
 #artist {

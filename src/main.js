@@ -13,12 +13,13 @@ Vue.component("vueSlider", vueSlider);
 new Vue({
   render: h => h(App),
   data: {
-      track: {
-        name: "",
-        artist: "",
-        album: "",
-        song: "",
-        isPlaying: true
-      }
+    track: {
+      name: "",
+      artist: "",
+      album: "",
+      song: "",
+      isPlaying: false,
+      changeSong: false
+    }
   }
-}).$mount('#app')
+}).$mount("#app");

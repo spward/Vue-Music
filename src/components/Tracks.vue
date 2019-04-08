@@ -12,7 +12,7 @@
   <br>
   <div id="top-tracks">
   <div id="track"  v-for="(track) in tracks" :key='track.id'>
-    <img @click="currentTrack(track), autoplay()" class="cover" :src="'https://api.napster.com/imageserver/v2/albums/' + track.albumId  + '/images/500x500.jpg'">
+    <img @click="currentTrack(track),loadTrack()" class="cover" :src="'https://api.napster.com/imageserver/v2/albums/' + track.albumId  + '/images/500x500.jpg'">
 
     <div class=content-name><p>{{track.name}}</p></div>
     <div class="artist-name"><p>{{track.artistName}}</p></div>
@@ -60,8 +60,10 @@ export default {
       this.$root.$data.track.album = track.albumId;
       this.$root.$data.track.song = track.previewURL;
     },
-    autoplay: function () {
-      this.$root.$data.track.isPlaying = true;
+    loadTrack: function () {
+      this.$root.$data.track.changeSong = true;
+      this.$root.$data.track.isPlaying = false;
+
     }
   }
 }
