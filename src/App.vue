@@ -1,31 +1,29 @@
 <template>
   <div id="app">
-      <div id="center">
-        <h1>Vue Music</h1>
-        <div class="input-wrapper">
-          <input type="text" name="search" id="search" placeholder="Search...">
-            <i class="fas fa-search"></i>
-        </div>
+    <div id="center">
+      <h1>Vue Music</h1>
+      <div class="input-wrapper">
+        <input type="text" name="search" id="search" placeholder="Search...">
+        <i class="fas fa-search"></i>
       </div>
-      <playlists/>
-      <tracks/>
-      <albums/>
-      <artists/>
-  <audio-player/>
-
+    </div>
+    <playlists/>
+    <tracks/>
+    <albums/>
+    <artists/>
+    <audio-player/>
   </div>
 </template>
 
 <script>
-import Tracks from './components/Tracks.vue';
-import Albums from './components/Albums';
-import Artists from './components/Artists';
-import Playlists from './components/Playlists';
-import AudioPlayer from '@/components/AudioPlayer/AudioPlayer';
-
+import Tracks from "./components/Tracks.vue";
+import Albums from "./components/Albums";
+import Artists from "./components/Artists";
+import Playlists from "./components/Playlists";
+import AudioPlayer from "@/components/AudioPlayer/AudioPlayer";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Tracks,
     Albums,
@@ -33,20 +31,18 @@ export default {
     Playlists,
     AudioPlayer
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import 'assets/styles/_variables.scss';
-@import url('https://fonts.googleapis.com/css?family=Arimo:400,700');
+@import "assets/styles/_variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Arimo:400,700");
 
 body {
-  font-family: 'Arimo', sans-serif;
+  font-family: "Arimo", sans-serif;
   background-color: $primary;
   color: $text;
   padding: 0;
@@ -59,7 +55,7 @@ body {
 
 h1 {
   font-size: 40px;
-   margin: 0;
+  margin: 0;
 }
 input {
   border: none;
@@ -78,5 +74,4 @@ input {
     margin-top: 25px;
   }
 }
-
 </style>

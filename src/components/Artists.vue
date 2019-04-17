@@ -1,75 +1,88 @@
 <template>
-<div id="artists">
-  <h5 class="header">Top Artists</h5>
-
-
-  <select name="range" v-model="range">
-    <option value="day">Day</option>
-    <option value="week">Week</option>
-    <option value="month">Month</option>
-    <option value="year">Year</option>
-    <option value="life">Life</option>
-  </select>
-  <br>
-  <div id="top-artists">
-  <div id="artist"  v-for="artist in artists" :key='artist.id'>
-    <img class="cover" :src="'https://api.napster.com/imageserver/v2/artists/' + artist.id  + '/images/633x422.jpg'">
-    <div class=content-name><p>{{artist.name}}</p></div>
+  <div id="artists">
+    <h5 class="header">Top Artists</h5>
+    <select name="range" v-model="range">
+      <option value="day">Day</option>
+      <option value="week">Week</option>
+      <option value="month">Month</option>
+      <option value="year">Year</option>
+      <option value="life">Life</option>
+    </select>
+    <br>
+    <div id="top-artists">
+      <div class="artist" v-for="artist in artists" :key="artist.id">
+        <img
+          class="artist__cover"
+          :src="'https://api.napster.com/imageserver/v2/artists/' + artist.id  + '/images/633x422.jpg'"
+        >
+        <div class="artist__name">
+          <p>{{artist.name}}</p>
+        </div>
+      </div>
+    </div>
   </div>
-  </div>
-</div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-  name: 'artists',
-  data () {
+  name: "artists",
+  data() {
     return {
       artists: [],
-      range: 'day'
-    }
+      range: "day"
+    };
   },
   created() {
     this.artistData();
   },
   watch: {
-    range : function () {
+    range: function() {
       this.artistData();
     }
   },
   methods: {
-    artistData: function () {
-      axios.get('http://api.napster.com/v2.2/artists/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=10&range=' + this.range)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.artists = response.data.artists
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
+    artistData: function() {
+      axios
+        .get(
+          "http://api.napster.com/v2.2/artists/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=10&range=" +
+            this.range
+        )
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.artists = response.data.artists;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 #top-artists {
-    display: flex;
-    align-items: stretch;
-    flex-wrap: wrap;
-    margin-bottom: 75px;
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin-bottom: 75px;
 }
 
-#artist {
-margin: 30px;
-}
+.artist {
+  margin: 30px;
 
-.cover {
-  border-radius: 5%;
-  width: 200px;
-  height: 176px;
+  &__cover {
+    border-radius: 5%;
+    width: 200px;
+    height: 176px;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.9375rem;
+  }
 }
 
 h5 {
@@ -81,7 +94,6 @@ h5 {
 select {
   font-size: 15px;
   margin: 0 30px;
-
 }
 
 p {
@@ -89,15 +101,5 @@ p {
   overflow: hidden;
   white-space: nowrap;
   margin: 5px 0;
-}
-
-.content-name {
-  font-weight: 700;
-  color: #fff;
-  font-size: .9375rem;
-}
-
-.artist-name {
-  font-size: .85rem;
 }
 </style>
