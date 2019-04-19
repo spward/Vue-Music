@@ -2,7 +2,6 @@
   <div class="current-track">
     <img
       class="current-track__cover"
-      v-if="songAlbum"
       :src="'https://api.napster.com/imageserver/v2/albums/' + songAlbum  + '/images/500x500.jpg'"
     >
     <div class="current-track__info">

@@ -5,7 +5,8 @@ const state = {
   album: "",
   song: "",
   volume: 0.5,
-  audioElement: null
+  audioElement: null,
+  isPlaying: true
 };
 
 // Gets data to send to components
@@ -14,13 +15,26 @@ const getters = {
   songArtist: state => state.artist,
   songAlbum: state => state.album,
   song: state => state.song,
-  audioElement: state => state.audioElement
+  audioElement: state => state.audioElement,
+  isPlaying: state => state.isPlaying
 };
 
 const actions = {
   // Changes the song when song is selected
-  loadTrack({ commit }) {
-    commit("setAudio", this.song);
+  loadTrack() {
+    if (!state.audioElement) {
+      state.audioElement = document.querySelector("#player");
+    }
+    state.audioElement.load();
+    if (state.isPlaying === true) {
+      setTimeout(() => {
+        state.audioElement.play();
+      }, 10);
+    }
+  },
+  toggleIsPlaying({ commit }) {
+    state.isPlaying = !state.isPlaying;
+    commit("setIsPlaying", state.isPlaying);
   }
 };
 
@@ -30,7 +44,8 @@ const mutations = {
   setArtist: (state, songArtist) => (state.artist = songArtist),
   setAlbum: (state, songAlbum) => (state.album = songAlbum),
   setSong: (state, song) => (state.song = song),
-  setAudio: (state, song) => (state.audioElement = new Audio(song))
+  setAudio: (state, song) => (state.audioElement = new Audio(song)),
+  setIsPlaying: (state, isPlaying) => (state.isPlaying = isPlaying)
 };
 
 export default {

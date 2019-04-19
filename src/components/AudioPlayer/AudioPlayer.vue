@@ -1,5 +1,5 @@
 <template>
-  <div class="audio-player">
+  <div class="audio-player" v-show="song">
     <div class="audio-player__inner">
       <current-track class="audio-player__left"/>
 

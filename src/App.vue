@@ -7,6 +7,7 @@
         <i class="fas fa-search"></i>
       </div>
     </div>
+    
     <playlists/>
     <tracks/>
     <albums/>

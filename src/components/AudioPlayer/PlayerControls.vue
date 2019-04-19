@@ -1,5 +1,5 @@
 <template>
-  <div id="player-controls">
+  <div id="player-controls" >
     <!-- <i class="fas fa-step-backward control-btn" id="prev-btn"></i> -->
     <i class="fas fa-pause control-btn" v-if="isPlaying" @click="toggleStatus()" id="pause-btn"></i>
     <i class="fas fa-play control-btn" v-else id="play-btn" @click="toggleStatus()"></i>
@@ -12,24 +12,18 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "player-controls",
-  data() {
-    return {
-      // Boolean to check if the audo is playing
-      isPlaying: false
-    };
-  },
   computed: {
-    ...mapGetters(["song", "audioElement"]),
+    ...mapGetters(["song", "audioElement", "isPlaying"]),
     // Checks to see if the audio has been loaded
     isTrackLoaded: function() {
       return this.song !== null && this.audioElement !== null;
     }
   },
   methods: {
-    ...mapActions(["loadTrack"]),
+    ...mapActions(["loadTrack", "toggleIsPlaying"]),
     // Toggles audio play and pause
     toggleStatus: function() {
-      this.isPlaying = !this.isPlaying;
+      this.toggleIsPlaying();
 
       // if Audio is not loaded load with the song selected.
       if (!this.isTrackLoaded) {
