@@ -1,109 +1,86 @@
 <template>
-  <div class="player-playback" v-if="context">
-    <div class="player-playback__time">{{progress | msToMinutes}}</div>
+  <div class="player-playback" v-if="audioElement !== null && songDuration > 0">
+    <div class="player-playback__time">{{Math.round(playback)}}</div>
     <div class="player-playback__progress-bar">
       <vue-slider
-        v-model="progress"
-        v-on:drag-start="onDragStart"
-        v-on:callback="onProgressChange"
-        v-on:drag-end="onDragEnd"
+        v-model="playback"
         :max="songDuration"
-        :tooltip="false"
-        :dot-size="15"
-        :process-style="{'background': '#1db954'}"
+        :process-style="{'background': '#264a75'}"
         :bg-style="{'background': '#737575'}"
+        v-on:drag-start="onDragStart"
+        v-on:drag-end="onDragEnd"
+        v-on:callback="onProgressChanged"
       />
     </div>
-    <div class="player-playback__time">{{songDuration | msToMinutes}}</div>
+    <div class="player-playback__time">{{songDuration}}</div>
   </div>
 </template>
 
 <script>
 import VueSlider from "vue-slider-component";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "player-player-playback",
+  data() {
+    return {
+      dragStart: false
+    };
+  },
   components: {
     VueSlider
   },
-  data() {
-    return {
-      progress: 0,
-      progressInterval: null,
-      isDragStart: false,
-      songDuration: 0
-    };
-  },
-
   computed: {
-    ...mapGetters("player", {
-      playback: "getPlayback",
-      context: "getPlaybackContext",
-      isPlaying: "isPlaying"
-    })
+    ...mapGetters([
+      "playbackProgress",
+      "audioElement",
+      "songDuration",
+      "isPlaying"
+    ]),
+    playback: {
+      get: function() {
+        return this.playbackProgress;
+      },
+      set: function(newValue) {
+        this.changePlaybackProgress(newValue);
+      }
+    }
   },
-
   methods: {
-    updateProgress() {
-      clearInterval(this.progressInterval);
-      this.progress = this.context.position;
-
-      if (!this.context.paused) {
-        this.progressInterval = setInterval(() => {
-          if (this.playback && this.progress + 1000 <= this.songDuration) {
-            this.progress = this.progress + 1000;
-          }
-        }, 1000);
-      }
+    ...mapActions(["toggleIsPlaying", "changePlaybackProgress"]),
+    //for some reason {currentValue} doesn't work
+    onDragStart() {
+      this.dragStart = true;
     },
-
-    onDragStart({ currentValue }) {
-      this.isDragStart = true;
+    //same with this function
+    onDragEnd() {
+      this.dragStart = false;
     },
-
-    onDragEnd({ currentValue }) {
-      this.isDragStart = false;
-    },
-
-    onProgressChange(currentValue) {
-      if (!this.isDragStart) {
-        this.isDragStart = false;
+    onProgressChanged(currentValue) {
+      if (!this.dragStart) {
+        this.dragStart = true;
+        this.changePlaybackProgress(currentValue);
       }
     }
-  },
-
-  watch: {
-    playback() {
-      this.songDuration = this.playback.item.duration_ms;
-    },
-
-    context() {
-      this.progress = this.context.position;
-    },
-
-    isPlaying() {
-      this.updateProgress();
-    }
-  },
-
-  created() {
-    this.updateProgress();
-    this.songDuration = this.playback.item.duration_ms;
   }
+  // created() {
+  //   this.updateProgress();
+  // }
 };
 </script>
 
-<style lang="sass">
+<style lang="scss" scoped>
+.player-playback {
+  display: flex;
+  width: 100% &__time {
+    min-width: 40px;
+  }
+  &__time {
+    margin: 0 20px;
+  }
 
-  .player-playback
-    display: flex
-    width: 100%
-
-    &__time
-      min-width: 40px
-
-    &__progress-bar
-      width: 100%
-
+  &__progress-bar {
+    width: 100%;
+  }
+}
 </style>

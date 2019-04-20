@@ -1,7 +1,12 @@
 <template>
-  <div id="player-controls" >
+  <div id="player-controls">
     <!-- <i class="fas fa-step-backward control-btn" id="prev-btn"></i> -->
-    <i class="fas fa-pause control-btn" v-if="isPlaying" @click="toggleStatus()" id="pause-btn"></i>
+    <i
+      class="fas fa-pause control-btn"
+      v-if="isTrackPlaying"
+      @click="toggleStatus()"
+      id="pause-btn"
+    ></i>
     <i class="fas fa-play control-btn" v-else id="play-btn" @click="toggleStatus()"></i>
     <!-- <i class="fas fa-step-forward control-btn" id="next-btn"></i> -->
   </div>
@@ -17,6 +22,14 @@ export default {
     // Checks to see if the audio has been loaded
     isTrackLoaded: function() {
       return this.song !== null && this.audioElement !== null;
+    },
+    isTrackPlaying: {
+      get: function() {
+        return this.isPlaying;
+      },
+      set: function() {
+        this.toggleIsPlaying();
+      }
     }
   },
   methods: {
@@ -29,20 +42,6 @@ export default {
       if (!this.isTrackLoaded) {
         this.loadTrack(this.song);
       }
-
-      // If isPlaying boolean is true then play song.
-      if (this.isPlaying) {
-        this.play();
-        return;
-      }
-      // If isPlaying boolean is false then pause song.
-      this.pause();
-    },
-    play: function() {
-      this.audioElement.play();
-    },
-    pause: function() {
-      this.audioElement.pause();
     }
   }
 };

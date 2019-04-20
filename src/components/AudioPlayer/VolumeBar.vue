@@ -1,41 +1,41 @@
 <template>
-  <div class="volume-bar">
-    <!-- <button></button>
-    <vue-slider
-      class="volume-bar__slider"
-      v-model="volume"
-      @change="changeVolume"
-      :dot-size="15"
-      :process-style="{'background': '#1db954'}"
-      :bg-style="{'background': '#737575', 'width': '80px'}"
-    />-->
-
-    <input
-      type="range"
-      min="0"
-      max="10"
-      step="0.5"
-      :value="this.volume"
-      @change="changeVolume(this.volume)"
-    >
+  <div class="volume-bar" v-if="audioElement != null && songDuration > 0">
+    <i class="fas fa-volume-up"></i>
+    <div class="slider">
+      <vue-slider
+        v-model="songVolume"
+        :max="10"
+        :dot-size="13"
+        :process-style="{'background': '#264a75'}"
+        :bg-style="{'background': '#737575', 'width': '3em'}"
+      />
+    </div>
+    <span>{{songVolume}}</span>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-
+import VueSlider from "vue-slider-component";
 export default {
   name: "volume-bar",
-  components: {},
+  components: {
+    VueSlider
+  },
   data() {
-    return {
-      tmpVolume: 0,
-      dragStartVolume: 0
-    };
+    return {};
   },
 
   computed: {
-    ...mapGetters(["volume"])
+    ...mapGetters(["audioElement", "songDuration", "volume"]),
+    songVolume: {
+      get: function() {
+        return this.volume * 10;
+      },
+      set: function(newVolume) {
+        this.changeVolume(newVolume);
+      }
+    }
   },
 
   methods: {
@@ -53,8 +53,12 @@ export default {
 
 .volume-bar {
   display: flex;
-  width: 25%;
+  width: 8em;
   margin: 0 40px;
+  .slider {
+    margin: 0 3px;
+    width: 90%;
+  }
   input {
     -webkit-appearance: none;
     width: 100%;
@@ -64,6 +68,9 @@ export default {
     outline: none;
     opacity: 0.8;
     transition: opacity 0.2s;
+  }
+  span {
+    margin-left: 20px;
   }
 }
 </style>

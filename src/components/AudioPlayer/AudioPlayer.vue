@@ -1,11 +1,11 @@
 <template>
-  <div class="audio-player">
+  <div class="audio-player" v-if="audioElement !== null">
     <div class="audio-player__inner">
       <current-track class="audio-player__left"/>
 
       <div class="audio-player__center">
         <player-controls/>
-        <!-- <player-playback/> -->
+        <player-playback v-if="audioElement !== null && songDuration !== null"/>
       </div>
 
       <div class="audio-player__right">
@@ -13,14 +13,13 @@
         <volume-bar/>
       </div>
     </div>
-    <audio id="player" :src="song"></audio>
   </div>
 </template>
 
 <script>
 import CurrentTrack from "./CurrentTrack";
 import PlayerControls from "./PlayerControls";
-// import PlayerPlayback from "./PlayerPlayback";
+import PlayerPlayback from "./PlayerPlayback";
 import VolumeBar from "./VolumeBar";
 import { mapGetters } from "vuex";
 
@@ -29,11 +28,11 @@ export default {
   components: {
     CurrentTrack,
     PlayerControls,
-    VolumeBar
-    // PlayerPlayback
+    VolumeBar,
+    PlayerPlayback
   },
   computed: {
-    ...mapGetters(["song"])
+    ...mapGetters(["song", "songDuration", "audioElement"])
   }
 };
 </script>

@@ -16,6 +16,7 @@ const getters = {
 };
 
 const actions = {
+  // Retrieves all of the Tracks Data
   async getTracks({ commit }, range) {
     await axios
       .get(
@@ -27,6 +28,7 @@ const actions = {
         commit("setTracks", response.data.tracks);
       });
   },
+  // Retrieves all of the Albums Data
   async getAlbums({ commit }, range) {
     await axios
       .get(
@@ -38,6 +40,7 @@ const actions = {
         commit("setAlbums", response.data.albums);
       });
   },
+  // Retrieves all of the Artists Data
   async getArtists({ commit }, range) {
     await axios
       .get(
@@ -48,6 +51,7 @@ const actions = {
         commit("setArtists", response.data.artists);
       });
   },
+  // Retrieves all of the Playlists Data
   async getPlaylists({ commit }) {
     await axios
       .get(
