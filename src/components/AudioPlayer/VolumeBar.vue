@@ -10,7 +10,14 @@
       :bg-style="{'background': '#737575', 'width': '80px'}"
     />-->
 
-    <input type="range" min="0" max="10" step="0.5" :value="volume" @change="changeVolume(volume)">
+    <input
+      type="range"
+      min="0"
+      max="10"
+      step="0.5"
+      :value="this.volume"
+      @change="changeVolume(this.volume)"
+    >
   </div>
 </template>
 

@@ -21,31 +21,18 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "playlists",
-  data() {
-    return {
-      playlists: []
-    };
+  computed: {
+    ...mapGetters(["playlists"])
   },
   created() {
-    this.playlistData();
+    this.getPlaylists();
   },
   methods: {
-    playlistData: function() {
-      axios
-        .get(
-          "http://api.napster.com/v2.2/playlists/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=13"
-        )
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.playlists = response.data.playlists;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    }
+    ...mapActions(["getPlaylists"])
   }
 };
 </script>

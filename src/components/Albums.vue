@@ -27,38 +27,27 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "albums",
   data() {
     return {
-      albums: [],
       range: "day"
     };
   },
+  computed: {
+    ...mapGetters(["albums"])
+  },
   created() {
-    this.albumData();
+    this.getAlbums(this.range);
   },
   watch: {
     range: function() {
-      this.albumData();
+      this.getAlbums(this.range);
     }
   },
   methods: {
-    albumData: function() {
-      axios
-        .get(
-          "http://api.napster.com/v2.2/albums/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=10&range=" +
-            this.range
-        )
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.albums = response.data.albums;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    }
+    ...mapActions(["getAlbums"])
   }
 };
 </script>

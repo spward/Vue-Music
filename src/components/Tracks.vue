@@ -11,7 +11,7 @@
     </select>
     <br>
     <div id="top-tracks">
-      <div id="track" v-for="(track) in tracks" :key="track.id">
+      <div id="track" v-for="track in tracks" :key="track.id">
         <img
           @click="currentTrack(track), loadTrack()"
           class="cover"
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -38,35 +37,22 @@ export default {
   components: {},
   data() {
     return {
-      tracks: [],
       range: "day"
     };
   },
   computed: {
-    ...mapGetters(["songName", "songArtist", "songAlbum"])
+    ...mapGetters(["songName", "songArtist", "songAlbum", "tracks"])
   },
   watch: {
-    range: {
-      handler: "trackData",
-      immediate: true
+    range: function() {
+      this.getTracks(this.range);
     }
   },
+  created() {
+    this.getTracks(this.range);
+  },
   methods: {
-    ...mapActions(["loadTrack"]),
-    trackData: function() {
-      axios
-        .get(
-          "http://api.napster.com/v2.2/tracks/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=10&range=" +
-            this.range
-        )
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.tracks = response.data.tracks;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    },
+    ...mapActions(["loadTrack", "getTracks"]),
     currentTrack: function(track) {
       this.$store.commit("setName", track.name);
       this.$store.commit("setArtist", track.artistName);

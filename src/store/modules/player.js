@@ -4,7 +4,7 @@ const state = {
   artist: "",
   album: "",
   song: "",
-  volume: 0.5,
+  volume: 5,
   audioElement: null,
   isPlaying: true
 };
@@ -22,10 +22,12 @@ const getters = {
 
 const actions = {
   // Changes the song when song is selected
-  loadTrack() {
-    if (!state.audioElement) {
-      state.audioElement = document.querySelector("#player");
+  loadTrack({ commit }) {
+    if (state.isPlaying && state.audioElement !== null) {
+      state.audioElement.pause();
+      state.audioElement.currentTime = 0;
     }
+    commit("setAudio", state.song);
     state.audioElement.load();
     if (state.isPlaying === true) {
       setTimeout(() => {
@@ -33,10 +35,12 @@ const actions = {
       }, 10);
     }
   },
+  // Toggles the playing boolean
   toggleIsPlaying({ commit }) {
     state.isPlaying = !state.isPlaying;
     commit("setIsPlaying", state.isPlaying);
   },
+  // Change the volume of the song
   changeVolume({ commit }, changeVolume) {
     commit("setVolume", changeVolume);
   }
@@ -53,6 +57,7 @@ const mutations = {
   setVolume: (state, volume) => (state.volume = volume)
 };
 
+// Exports all of the data from Vuex
 export default {
   state,
   getters,

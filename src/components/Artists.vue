@@ -24,38 +24,28 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "artists",
   data() {
     return {
-      artists: [],
       range: "day"
     };
   },
+  computed: {
+    ...mapGetters(["artists"])
+  },
   created() {
-    this.artistData();
+    this.getArtists(this.range);
   },
   watch: {
     range: function() {
-      this.artistData();
+      this.getArtists(this.range);
     }
   },
   methods: {
-    artistData: function() {
-      axios
-        .get(
-          "http://api.napster.com/v2.2/artists/top?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&limit=10&range=" +
-            this.range
-        )
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.artists = response.data.artists;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    }
+    ...mapActions(["getArtists"])
   }
 };
 </script>
