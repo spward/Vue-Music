@@ -1,5 +1,5 @@
 <template>
-  <div class="audio-player" v-show="song">
+  <div class="audio-player">
     <div class="audio-player__inner">
       <current-track class="audio-player__left"/>
 
@@ -10,7 +10,7 @@
 
       <div class="audio-player__right">
         <!-- <device-picker/> -->
-        <!-- <volume-bar/> -->
+        <volume-bar/>
       </div>
     </div>
     <audio id="player" :src="song"></audio>
@@ -20,14 +20,16 @@
 <script>
 import CurrentTrack from "./CurrentTrack";
 import PlayerControls from "./PlayerControls";
+// import PlayerPlayback from "./PlayerPlayback";
+import VolumeBar from "./VolumeBar";
 import { mapGetters } from "vuex";
-// import PlayerPlayback from './PlayerPlayback';
 
 export default {
   name: "audio-player",
   components: {
     CurrentTrack,
-    PlayerControls
+    PlayerControls,
+    VolumeBar
     // PlayerPlayback
   },
   computed: {

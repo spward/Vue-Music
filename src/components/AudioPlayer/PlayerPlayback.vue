@@ -1,5 +1,5 @@
 <template>
-  <div class="player-playback">
+  <div class="player-playback" v-if="context">
     <div class="player-playback__time">{{progress | msToMinutes}}</div>
     <div class="player-playback__progress-bar">
       <vue-slider
@@ -19,9 +19,14 @@
 </template>
 
 <script>
-export default {
-  name: "player-playback",
+import VueSlider from "vue-slider-component";
+import { mapGetters } from "vuex";
 
+export default {
+  name: "player-player-playback",
+  components: {
+    VueSlider
+  },
   data() {
     return {
       progress: 0,
@@ -29,6 +34,14 @@ export default {
       isDragStart: false,
       songDuration: 0
     };
+  },
+
+  computed: {
+    ...mapGetters("player", {
+      playback: "getPlayback",
+      context: "getPlaybackContext",
+      isPlaying: "isPlaying"
+    })
   },
 
   methods: {
@@ -45,19 +58,17 @@ export default {
       }
     },
 
-    onDragStart() {
+    onDragStart({ currentValue }) {
       this.isDragStart = true;
     },
 
-    onDragEnd() {
+    onDragEnd({ currentValue }) {
       this.isDragStart = false;
-      // api.spotify.player.seekToPosition(currentValue);
     },
 
-    onProgressChange() {
+    onProgressChange(currentValue) {
       if (!this.isDragStart) {
         this.isDragStart = false;
-        // api.spotify.player.seekToPosition(currentValue);
       }
     }
   },

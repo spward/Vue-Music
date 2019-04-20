@@ -45,12 +45,10 @@ export default {
   computed: {
     ...mapGetters(["songName", "songArtist", "songAlbum"])
   },
-  created() {
-    this.trackData();
-  },
   watch: {
-    range: function() {
-      this.trackData();
+    range: {
+      handler: "trackData",
+      immediate: true
     }
   },
   methods: {

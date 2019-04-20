@@ -7,7 +7,7 @@
         <i class="fas fa-search"></i>
       </div>
     </div>
-    
+
     <playlists/>
     <tracks/>
     <albums/>
@@ -31,9 +31,6 @@ export default {
     Artists,
     Playlists,
     AudioPlayer
-  },
-  data() {
-    return {};
   }
 };
 </script>

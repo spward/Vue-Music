@@ -16,7 +16,8 @@ const getters = {
   songAlbum: state => state.album,
   song: state => state.song,
   audioElement: state => state.audioElement,
-  isPlaying: state => state.isPlaying
+  isPlaying: state => state.isPlaying,
+  volume: state => state.volume
 };
 
 const actions = {
@@ -35,6 +36,9 @@ const actions = {
   toggleIsPlaying({ commit }) {
     state.isPlaying = !state.isPlaying;
     commit("setIsPlaying", state.isPlaying);
+  },
+  changeVolume({ commit }, changeVolume) {
+    commit("setVolume", changeVolume);
   }
 };
 
@@ -45,7 +49,8 @@ const mutations = {
   setAlbum: (state, songAlbum) => (state.album = songAlbum),
   setSong: (state, song) => (state.song = song),
   setAudio: (state, song) => (state.audioElement = new Audio(song)),
-  setIsPlaying: (state, isPlaying) => (state.isPlaying = isPlaying)
+  setIsPlaying: (state, isPlaying) => (state.isPlaying = isPlaying),
+  setVolume: (state, volume) => (state.volume = volume)
 };
 
 export default {
