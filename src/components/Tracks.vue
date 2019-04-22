@@ -34,25 +34,29 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Tracks",
-  components: {},
   data() {
     return {
       range: "day"
     };
   },
   computed: {
+    // Global Variables
     ...mapGetters(["songName", "songArtist", "songAlbum", "tracks"])
   },
   watch: {
+    // Tracks the range to update the DOM on change
     range: function() {
       this.getTracks(this.range);
     }
   },
   created() {
+    // Retrieve track data on page load
     this.getTracks(this.range);
   },
   methods: {
+    // Global Functions
     ...mapActions(["loadTrack", "getTracks"]),
+    // Commits the current track to vuex, player.js
     currentTrack: function(track) {
       this.$store.commit("setName", track.name);
       this.$store.commit("setArtist", track.artistName);

@@ -26,12 +26,15 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "playlists",
   computed: {
+    // Global Variable
     ...mapGetters(["playlists"])
   },
+  // Retrieves the playlist data on page load
   created() {
     this.getPlaylists();
   },
   methods: {
+    // Global Function
     ...mapActions(["getPlaylists"])
   }
 };
@@ -51,7 +54,7 @@ export default {
   &__cover {
     border-radius: 5%;
     width: 200px;
-    height: 200px;
+    height: 150px;
   }
 
   &__name {

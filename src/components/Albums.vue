@@ -36,17 +36,21 @@ export default {
     };
   },
   computed: {
+    // Global Variable
     ...mapGetters(["albums"])
   },
   created() {
+    // Outputs the albums on webpage load
     this.getAlbums(this.range);
   },
   watch: {
+    // Tracks the range selector to update the DOM
     range: function() {
       this.getAlbums(this.range);
     }
   },
   methods: {
+    // Global Function
     ...mapActions(["getAlbums"])
   }
 };

@@ -18,6 +18,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "current-track",
   computed: {
+    // Global Variables
     ...mapGetters(["songName", "songArtist", "songAlbum"])
   }
 };

@@ -5,11 +5,10 @@
 
       <div class="audio-player__center">
         <player-controls/>
-        <player-playback v-if="audioElement !== null && songDuration !== null"/>
+        <player-playback/>
       </div>
 
       <div class="audio-player__right">
-        <!-- <device-picker/> -->
         <volume-bar/>
       </div>
     </div>
@@ -32,6 +31,7 @@ export default {
     PlayerPlayback
   },
   computed: {
+    // Global Variables
     ...mapGetters(["song", "songDuration", "audioElement"])
   }
 };
@@ -44,7 +44,7 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 75px;
+  height: 70px;
   z-index: 2;
   background-color: $primary-d;
 

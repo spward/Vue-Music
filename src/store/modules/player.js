@@ -1,4 +1,4 @@
-// Set all global data necessary for Audio Player
+// Set all global data necessary for the Audio Player
 const state = {
   name: "",
   artist: "",
@@ -27,37 +27,59 @@ const getters = {
 const actions = {
   // Changes the song when song is selected
   loadTrack({ commit, dispatch }) {
+    // If the song is not playing init the song
     if (state.isPlaying && state.audioElement !== null) {
       commit("setIsPlaying", false);
       state.audioElement.pause();
       state.audioElement.currentTime = 0;
       commit("setSongDuration", 0);
     }
+    // Create new song Audio
     let audioInstance = new Audio(state.song);
 
+    // Set song to the start.
     commit("setPlaybackProgress", 0);
+    // Set song to play
     commit("setAudio", audioInstance);
+    // Set volume to desired level
     commit("setVolume", state.volume);
+
+    // Load the song and volume.
     state.audioElement.load();
+    state.audioElement.volume = state.volume;
     state.audioElement.onloadedmetadata = () => {
+      // Play audio
       setTimeout(() => {
         state.audioElement.play();
         dispatch("toggleIsPlaying");
       }, 10);
+      // Sets the songs full duration.
       commit("setSongDuration", Math.round(state.audioElement.duration));
     };
   },
   // Toggles the playing boolean
   toggleIsPlaying({ commit }) {
+    // Updates and commits the current play state
     let newPlayState = !state.isPlaying;
     commit("setIsPlaying", newPlayState);
+
+    // Checks to ensure the current song is playing
     if (state.isPlaying) {
       state.audioElement.play();
+
       //add event listener to update the playback time
       state.audioElement.ontimeupdate = () => {
-        commit("setPlaybackProgress", state.audioElement.currentTime);
+        // Stops the song if the song has reached the songs length
+        if (state.audioElement.currentTime >= state.songDuration) {
+          commit("setPlaybackProgress", state.songDuration);
+          commit("setIsPlaying", false);
+        } else {
+          // Updates the current song position
+          commit("setPlaybackProgress", state.audioElement.currentTime);
+        }
       };
     } else {
+      // Pauses the song if isPlaying is false
       state.audioElement.pause();
     }
   },
@@ -72,8 +94,10 @@ const actions = {
     if (playbackTime > state.audioElement.duration) {
       playbackNewTime = state.audioElement.duration;
     } else if (playbackTime <= 0) {
+      // if the Playback time is les than 1 start song from 0
       playbackNewTime = 0;
     } else {
+      // Set song location to wherever dragged to
       playbackNewTime = playbackTime;
     }
     commit("setPlaybackProgress", playbackNewTime);

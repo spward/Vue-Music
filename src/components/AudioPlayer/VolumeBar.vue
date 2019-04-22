@@ -22,16 +22,17 @@ export default {
   components: {
     VueSlider
   },
-  data() {
-    return {};
-  },
 
   computed: {
+    // Global Variables
     ...mapGetters(["audioElement", "songDuration", "volume"]),
     songVolume: {
+      // Gets the songs current volume from 0 to 10 and multiplies it
+      // by 10 to get the 0-10 numbers
       get: function() {
         return this.volume * 10;
       },
+      // Sets the volume to the coresponding volume level.
       set: function(newVolume) {
         this.changeVolume(newVolume);
       }
@@ -39,12 +40,9 @@ export default {
   },
 
   methods: {
+    // Global Function
     ...mapActions(["changeVolume"])
-  },
-
-  watch: {},
-
-  mounted() {}
+  }
 };
 </script>
 
@@ -69,8 +67,11 @@ export default {
     opacity: 0.8;
     transition: opacity 0.2s;
   }
+  i {
+    margin-right: 7px;
+  }
   span {
-    margin-left: 20px;
+    margin-left: 7px;
   }
 }
 </style>

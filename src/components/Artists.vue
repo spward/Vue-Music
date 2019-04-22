@@ -34,17 +34,21 @@ export default {
     };
   },
   computed: {
+    // Global Variable
     ...mapGetters(["artists"])
   },
   created() {
+    // Retrieves artist data on page load
     this.getArtists(this.range);
   },
   watch: {
+    // Tracks the range to update the DOM on change
     range: function() {
       this.getArtists(this.range);
     }
   },
   methods: {
+    // Global Function
     ...mapActions(["getArtists"])
   }
 };
@@ -65,7 +69,7 @@ export default {
   &__cover {
     border-radius: 5%;
     width: 200px;
-    height: 176px;
+    height: 150px;
   }
 
   &__name {

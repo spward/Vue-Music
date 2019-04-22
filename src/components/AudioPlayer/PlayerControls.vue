@@ -18,21 +18,25 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "player-controls",
   computed: {
+    // Global Variables
     ...mapGetters(["song", "audioElement", "isPlaying"]),
     // Checks to see if the audio has been loaded
     isTrackLoaded: function() {
       return this.song !== null && this.audioElement !== null;
     },
     isTrackPlaying: {
+      // Checks if the current song is playing
       get: function() {
         return this.isPlaying;
       },
+      // Sets the song to play or pause.
       set: function() {
         this.toggleIsPlaying();
       }
     }
   },
   methods: {
+    // Global Functions
     ...mapActions(["loadTrack", "toggleIsPlaying"]),
     // Toggles audio play and pause
     toggleStatus: function() {

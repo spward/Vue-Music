@@ -2,10 +2,10 @@
   <div id="app">
     <div id="center">
       <h1>Vue Music</h1>
-      <div class="input-wrapper">
+      <!-- <div class="input-wrapper">
         <input type="text" name="search" id="search" placeholder="Search...">
         <i class="fas fa-search"></i>
-      </div>
+      </div>-->
     </div>
 
     <playlists/>
@@ -53,7 +53,8 @@ body {
 
 h1 {
   font-size: 40px;
-  margin: 0;
+  margin: 20px 0;
+  color: $primary-b;
 }
 input {
   border: none;
@@ -66,7 +67,7 @@ input {
 .input-wrapper {
   i {
     padding-right: 10px;
-    color: #459ce7;
+    color: $primary-b;
     position: absolute;
     margin-left: -25px;
     margin-top: 25px;

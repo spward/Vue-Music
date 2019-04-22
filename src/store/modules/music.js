@@ -1,5 +1,5 @@
 import axios from "axios";
-// Set all global data necessary for Audio Player
+// Set all global data
 const state = {
   tracks: [],
   albums: [],

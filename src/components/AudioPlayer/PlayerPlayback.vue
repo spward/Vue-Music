@@ -31,6 +31,7 @@ export default {
     VueSlider
   },
   computed: {
+    // Global Variables
     ...mapGetters([
       "playbackProgress",
       "audioElement",
@@ -38,21 +39,24 @@ export default {
       "isPlaying"
     ]),
     playback: {
+      // Gets the position of the song
       get: function() {
         return this.playbackProgress;
       },
+      // Sets the position of the song updated every second.
       set: function(newValue) {
         this.changePlaybackProgress(newValue);
       }
     }
   },
   methods: {
+    // Global Functions
     ...mapActions(["toggleIsPlaying", "changePlaybackProgress"]),
-    //for some reason {currentValue} doesn't work
+    // Sets the start position to 0
     onDragStart() {
       this.dragStart = true;
     },
-    //same with this function
+    // Sets the end position to 30
     onDragEnd() {
       this.dragStart = false;
     },
@@ -63,18 +67,14 @@ export default {
       }
     }
   }
-  // created() {
-  //   this.updateProgress();
-  // }
 };
 </script>
 
 <style lang="scss" scoped>
 .player-playback {
   display: flex;
-  width: 100% &__time {
-    min-width: 40px;
-  }
+  width: 100%;
+
   &__time {
     margin: 0 20px;
   }
