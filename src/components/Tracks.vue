@@ -18,12 +18,9 @@
           :src="'https://api.napster.com/imageserver/v2/albums/' + track.albumId  + '/images/500x500.jpg'"
         >
 
-        <div class="content-name">
-          <p>{{track.name}}</p>
-        </div>
-        <div class="artist-name">
-          <p>{{track.artistName}}</p>
-        </div>
+          <p class="content-name" @click="currentTrack(track), loadTrack()">{{track.name}}</p>
+          
+          <p class="artist-name">{{track.artistName}}</p>
       </div>
     </div>
   </div>
@@ -108,6 +105,7 @@ p {
 }
 
 .content-name {
+  cursor: pointer;
   font-weight: 700;
   color: #fff;
   font-size: 0.9375rem;

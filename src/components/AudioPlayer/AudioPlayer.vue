@@ -9,6 +9,7 @@
       </div>
 
       <div class="audio-player__right">
+        <queue/>
         <volume-bar/>
       </div>
     </div>
@@ -19,6 +20,7 @@
 import CurrentTrack from "./CurrentTrack";
 import PlayerControls from "./PlayerControls";
 import PlayerPlayback from "./PlayerPlayback";
+import Queue from "./Queue";
 import VolumeBar from "./VolumeBar";
 import { mapGetters } from "vuex";
 
@@ -28,7 +30,8 @@ export default {
     CurrentTrack,
     PlayerControls,
     VolumeBar,
-    PlayerPlayback
+    PlayerPlayback,
+    Queue
   },
   computed: {
     // Global Variables
